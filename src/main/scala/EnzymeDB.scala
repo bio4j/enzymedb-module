@@ -23,15 +23,16 @@ case object InitialBio4j extends Bundle() with AnyBio4jInstanceBundle {
   }
 }
 
-case object EnzymeDBRawData 
-  extends RawDataBundle(???)
+case object EnzymeDBRawData extends RawDataBundle("ftp://ftp.expasy.org/databases/enzyme/enzyme.dat")
 
 case object EnzymeDBAPI extends APIBundle(){}
 
 case class EnzymeDBProgram(
-  ???
+  data : File, // 1. Enzyme DB data file (.dat)
+  db   : File  // 2. Bio4j DB folder
 ) extends ImporterProgram(new ImportEnzymeDBTitan(), Seq(
-  ???
+  data.getAbsolutePath, 
+  db.getAbsolutePath
 ))
 
 case object EnzymeDBImportedData extends ImportedDataBundle(
@@ -41,7 +42,8 @@ case object EnzymeDBImportedData extends ImportedDataBundle(
   ) {
   override def install[D <: AnyDistribution](d: D): InstallResults = {
     EnzymeDBProgram(
-      ???
+      data = EnzymeDBRawData.inDataFolder("enzyme.dat"),
+      db   = dbLocation
     ).execute ->-
     success("Data " + name + " is imported to" + dbLocation)
   }
@@ -53,7 +55,7 @@ case object EnzymeDBMetadata extends generated.metadata.EnzymedbModule()
 
 case object EnzymeDBRelease extends ReleaseBundle(
   ObjectAddress("bio4j.releases", 
-                "EnzymeDB/v" + EnzymeDBMetadata.version.stripSuffix("-SNAPSHOT")), 
+                "enzymedb/v" + EnzymeDBMetadata.version.stripSuffix("-SNAPSHOT")), 
   EnzymeDBModule
 )
 
