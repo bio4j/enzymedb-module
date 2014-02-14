@@ -6,8 +6,8 @@ import ohnosequences.statika.aws._
 import ohnosequences.statika.ami._
 import ohnosequences.awstools.regions._
 
-case object enzymedbApplicator extends AWSDistribution(
-  enzymedbMetadata,
+case object EnzymeDBApplicator extends AWSDistribution(
+  EnzymeDBMetadata,
   amzn_ami_pv_64bit(Region.Ireland)(javaHeap = 6),
-  members = enzymedbRelease :~: enzymedbDistribution :~: ∅
+  members = EnzymeDBRelease :~: EnzymeDBDistribution :~: ∅
 )

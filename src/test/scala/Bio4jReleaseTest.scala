@@ -25,18 +25,18 @@ object TestBundles {
   }
 
   case object TestBundle 
-    extends ReleaseBundle(enzymedbRelease.s3address, enzymedbRelease.module) {
+    extends ReleaseBundle(EnzymeDBRelease.s3address, EnzymeDBRelease.module) {
       override def install[D <: AnyDistribution](d: D): InstallResults = {
         checkGorilla(new NodeRetrieverTitan(
-            new Bio4jManager(enzymedbRelease.module.dbLocation.getAbsolutePath))) -&-
-        enzymedbRelease.install(d) -&-
-        enzymedbDistribution.install(d) -&-
-        checkGorilla(enzymedbDistribution.nodeRetriever)
+            new Bio4jManager(EnzymeDBRelease.module.dbLocation.getAbsolutePath))) -&-
+        EnzymeDBRelease.install(d) -&-
+        EnzymeDBDistribution.install(d) -&-
+        checkGorilla(EnzymeDBDistribution.nodeRetriever)
       }
   }
 
   case object TestApplicator extends AWSDistribution(
-    enzymedbMetadata,
+    EnzymeDBMetadata,
     amzn_ami_pv_64bit(Region.Ireland)(javaHeap = 6),
     members = TestBundle :~: ∅
   )

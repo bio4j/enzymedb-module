@@ -23,42 +23,42 @@ case object InitialBio4j extends Bundle() with AnyBio4jInstanceBundle {
   }
 }
 
-case object enzymedbRawData 
+case object EnzymeDBRawData 
   extends RawDataBundle(???)
 
-case object enzymedbAPI extends APIBundle(){}
+case object EnzymeDBAPI extends APIBundle(){}
 
-case class enzymedbProgram(
+case class EnzymeDBProgram(
   ???
-) extends ImporterProgram(new ImportenzymedbTitan(), Seq(
+) extends ImporterProgram(new ImportEnzymeDBTitan(), Seq(
   ???
 ))
 
-case object enzymedbImportedData extends ImportedDataBundle(
-    rawData = enzymedbRawData :~: ∅,
+case object EnzymeDBImportedData extends ImportedDataBundle(
+    rawData = EnzymeDBRawData :~: ∅,
     initDB = InitialBio4j,
     importDeps = ∅
   ) {
   override def install[D <: AnyDistribution](d: D): InstallResults = {
-    enzymedbProgram(
+    EnzymeDBProgram(
       ???
     ).execute ->-
     success("Data " + name + " is imported to" + dbLocation)
   }
 }
 
-case object enzymedbModule extends ModuleBundle(enzymedbAPI, enzymedbImportedData)
+case object EnzymeDBModule extends ModuleBundle(EnzymeDBAPI, EnzymeDBImportedData)
 
-case object enzymedbMetadata extends generated.metadata.EnzymedbModule()
+case object EnzymeDBMetadata extends generated.metadata.EnzymedbModule()
 
-case object enzymedbRelease extends ReleaseBundle(
+case object EnzymeDBRelease extends ReleaseBundle(
   ObjectAddress("bio4j.releases", 
-                "enzymedb/v" + enzymedbMetadata.version.stripSuffix("-SNAPSHOT")), 
-  enzymedbModule
+                "EnzymeDB/v" + EnzymeDBMetadata.version.stripSuffix("-SNAPSHOT")), 
+  EnzymeDBModule
 )
 
-case object enzymedbDistribution extends DistributionBundle(
-  enzymedbRelease,
+case object EnzymeDBDistribution extends DistributionBundle(
+  EnzymeDBRelease,
   destPrefix = new File("/media/ephemeral0/")
 )
 

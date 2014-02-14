@@ -1,6 +1,6 @@
-## enzymedb Bio4j module
+## EnzymeDB Bio4j module
 
-This is a Bio4j module representing enzymedb. Find more information in [bio4j/modules](https://github.com/bio4j/modules).
+This is a Bio4j module representing EnzymeDB. Find more information in [bio4j/modules](https://github.com/bio4j/modules).
 
 ## Usage
 
